@@ -150,12 +150,14 @@ export default {
       };
       try {
         this.loading = true;
-        const {messageUsedEmail, messageCreateEmail} = await this.$store.dispatch("auth/createUser", formData);
-        if(messageUsedEmail){
-          this.setError = messageUsedEmail
+        const dataSuccess = await this.$store.dispatch("auth/createUser", formData);
+        const dataError = this.$store.getters["isError"]
+        if(dataError){
+          if(dataError.message) this.setError = dataError.message
+          else console.log(dataError)
         }
-        if(messageCreateEmail){
-        this.$message.success(messageCreateEmail);        
+        if(dataSuccess){
+        this.$message.success(dataSuccess.message);        
         this.controls.firstName = "";
         this.controls.lastName = "";
         this.controls.email = "";

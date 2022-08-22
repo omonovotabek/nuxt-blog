@@ -37,15 +37,21 @@ export const mutations = {
 }
 
 export const actions = {
-  async login({ dispatch }, payload) {
+  async createUser({commit}, payload) {
     try {
-      const data = await this.$axios.$post('/api/admin/signIn', payload)
-      if(data.token)
-        dispatch('setToken', data.token)
-      return data
+      return await this.$axios.$post('/api/auth/admin/signUp', payload)  
+    } catch (e) { 
+      commit('setError',  e.response.data, { root: true })
+    }
+  },
+  async login({ dispatch, commit }, payload) {
+    try {
+      const {token, message} = await this.$axios.$post('/api/auth/admin/signIn', payload)
+      if(token)
+        dispatch('setToken', token)
+      return message
     } catch (e) {
-      console.log(e.response)
-      return e.response
+      commit('setError',  e.response, { root: true })
     }
   },
 
@@ -61,13 +67,6 @@ export const actions = {
     Cookies.remove('jwt-token')
   },
 
-  async createUser({}, payload) {
-    try {
-      return await this.$axios.$post('/api/admin/signUp', payload)
-    } catch (e) { 
-      console.log(e.response)
-    }
-  },
 
   autoLogin({ dispatch }) {
     const cookieStr = process.browser

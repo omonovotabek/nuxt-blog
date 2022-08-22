@@ -1,7 +1,5 @@
 const {Schema, model} = require('mongoose')
 const jwt = require('jsonwebtoken')
-const config = require('config')
-const jwtSecretKey = config.get('jwtSecretKey')
 
 const adminSchema = new Schema ({
     firstName: {
@@ -24,7 +22,7 @@ const adminSchema = new Schema ({
     password: {
         type: String,
         required: true,
-        minlength: 6,
+        minlength: 10,
     }
 })
 adminSchema.methods.firstNameCapitalise = function () {
@@ -46,7 +44,7 @@ adminSchema.methods.lastNameCapitalise = function () {
 adminSchema.methods.generateAuthToken = function () {
     const token = jwt.sign(
         {_id: this._id},
-        jwtSecretKey,
+        process.env.jwtSecretKey,
         {expiresIn: 60*60}
     )
     return token

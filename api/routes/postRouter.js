@@ -1,11 +1,10 @@
 const {Router} = require('express')
-const {authGuard} = require('../middlewares/authGuard')
-const {imgUpload} = require('../middlewares/fileUploads')
+const {authGuard} = require('../middleware/authGuard')
 const postController = require('../controllers/postController')
 
-const router = Router()
+const router = Router() 
 
-router.post('/admin', authGuard, imgUpload, postController.create)
+router.post('/admin', authGuard, postController.create)
 router.get('/admin', authGuard, postController.getAll)
 router.get('/admin/:id', authGuard, postController.getById)
 router.put('/admin/:id', authGuard, postController.update)
@@ -15,4 +14,4 @@ router.get('/', postController.getAll)
 router.get('/:id', postController.getById)
 router.put('/add/view/:id', postController.addView)
 
-module.exports = router 
+module.exports = router    

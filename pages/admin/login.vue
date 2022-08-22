@@ -125,26 +125,27 @@ export default {
       try {  
         this.check = true
         this.loading = true;
-        const data = await this.$store.dispatch("auth/login", formData);
-        if(data.messageCheckEmail){
+        const dataSuccess = await this.$store.dispatch("auth/login", formData);
+        const dataError = this.$store.getters['isError']
+        if(dataError.status === 404){
           this.setErrorPassword = ''
-          this.setErrorEmail = data.messageCheckEmail
+          this.setErrorEmail = dataError.data.message
           this.onSubmitEmail = this.controls.email 
         }
-        if(data.messageCheckPassword){
+        if(dataError.status === 400){
           this.setErrorEmail =''
-          this.setErrorPassword = data.messageCheckPassword
+          this.setErrorPassword = dataError.data.message
           this.onSubmitPassword = this.controls.password 
         }
-        if(data.messageSuccess){
-          this.$message.success(data.messageSuccess);
+        if(dataSuccess){
+          this.$message.success(dataSuccess.message);
           this.$router.push('/admin')
           this.setErrorPassword = ''
           this.setErrorEmail =''
         }
         this.loading = false;
       } catch (e) {
-        // console.log(e);
+        console.log(e);
       }
     }
   }
