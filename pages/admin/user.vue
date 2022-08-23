@@ -157,7 +157,7 @@ export default {
           else console.log(dataError)
         }
         if(dataSuccess){
-        this.$message.success(dataSuccess.message);        
+        this.$message.success(dataSuccess);        
         this.controls.firstName = "";
         this.controls.lastName = "";
         this.controls.email = "";

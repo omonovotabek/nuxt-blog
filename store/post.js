@@ -1,12 +1,12 @@
 
 
-export const actions = {
+export const actions = { 
 
   async fetch({}) {
     try {
       return await this.$axios.$get('/api/post')
     } catch (e) {
-      console.log(e)
+      commit("setError", e.response, { root: true });
     }
   },
 
@@ -14,7 +14,7 @@ export const actions = {
     try {
       return await this.$axios.$get('/api/post/admin')
     } catch (e) {
-      console.log(e)
+      commit("setError", e.response, { root: true });
     }
   },
 
@@ -22,7 +22,7 @@ export const actions = {
     try {
       return await this.$axios.$get(`/api/post/${id}`)
     } catch (e) {
-      console.log(e)
+      commit("setError", e.response, { root: true });
     }
   },
 
@@ -31,7 +31,7 @@ export const actions = {
       const queryString = Object.entries(query).map(e => e.join('=')).join('&');
       return await this.$axios.$get(`/api/post/admin/${params.id}?${queryString}`)
     } catch (e) {
-      console.log(e)
+      commit("setError", e.response, { root: true });
     }
   },
 
@@ -40,10 +40,10 @@ export const actions = {
       const fd = new FormData()
       fd.append('title', title)
       fd.append('text', text)
-      fd.append('image', image, image.name)       
+      fd.append('image', image)       
       return await this.$axios.$post('/api/post/admin', fd)
     } catch (e) {
-      console.log(e);
+      commit("setError", e.response, { root: true });
     }
   },
 
@@ -53,7 +53,7 @@ export const actions = {
       // console.log(ad)
       return ad
     } catch (e) {
-      console.log(e)
+      commit("setError", e.response, { root: true });
     }
   },
 
@@ -63,7 +63,7 @@ export const actions = {
       // console.log(ad)
       return ad
     } catch (e) {
-      console.log(e)
+      commit("setError", e.response, { root: true });
     }
   },
   async addView({ }, {views, _id}) {
@@ -73,5 +73,13 @@ export const actions = {
       console.log(e)
     }
   },
+
+  async getAnalytics({commit}) {
+    try {
+      return await this.$axios.$get('api/post/admin/get/analytics')
+    } catch (error) {
+      console.log(error)
+    }
+  }
   
 }

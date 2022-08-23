@@ -2,19 +2,20 @@
   <el-card
   shadow="hover"
   :body-style="{padding:0}"
-  class="post"
+  class="post" 
   >
 
   <header slot="header" class="post-header">
     <h3>{{post.title}}</h3>
     <small>
       <i class="el-icon-time"></i>
-      {{new Date(post.date).toLocaleString()}}</small>
+      {{new Date(post.date).toLocaleString()}}</small> 
+      
   </header>
 
   <div class="post-body">
   <img 
-  :src="post.imageUrl" 
+  :src="require(`~/static/images${post.imageUrl}`)" 
   alt="post image" 
   class="post-img"/>
   </div>

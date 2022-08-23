@@ -1,42 +1,40 @@
 const Post = require('../models/PostModel')
-
-create = async function (req, res)  {
-    // if(!req.file)
-    //   return res.status(400).json({message:'Faylni to\'gri kiriting'})
-      
+const path = require("path")
+const fs = require('fs')
+create = async function (req, res, next)  {
     try {
+    const image = req.files.image;
     const {title, text} = req.body
-    // const {path} = req.file
-    const post = new Post ({title, text, imageUrl:`/${req.file.filename}`})
-    // post.imageUrl = path
+    image.mv(path.resolve(__dirname, '../../', 'static/images', image.name))
+    const post = new Post ({title, text, imageUrl:`/${image.name}`})
     await post.save()
     res.status(201).json(post)
- } catch (e) {
-    res.status(500).json(e)
+ } catch (error) {
+    next(error)
  }
 }
 
-getAll = async (req, res) => {
+getAll = async (req, res, next) => {
   try {
       const posts = await Post.find().sort({date: -1})
       res.status(200).json(posts)
-  } catch (e) {
-      res.status(500).json(e)
+  } catch (error) {
+      next(error)
   }
 }
 
-getById = async (req, res) => {
+getById = async (req, res, next) => {
    try {
        const {id} = req.params
        const post = await Post.findById({_id:id}).populate('comments')
        res.status(200).json(post)
     //    console.log(req.query)
-   } catch (e) {
-       res.status(500).json(e)
+   } catch (error) {
+       next(error)
    }
 }
 
-update = async (req, res) => {
+update = async (req, res, next) => {
   try {
       const {id} = req.params
       const {text} = req.body
@@ -47,32 +45,35 @@ update = async (req, res) => {
       {_id: id}, {$set}, {new: true}
       )
       res.status(200).json(post)
-  } catch (e) {
-      res.status(500).json(e)
+  } catch (error) {
+      next(error)
   }
 }
 
-remove = async (req, res) => {
+remove = async (req, res, next) => {
   try {
       const {id} = req.params
-      await Post.deleteOne({_id:id})
-      res.status(200).json({message: "Пост удален"})
-    //   const deletePost = await Post.findByIdAndDelete({_id:id})
+    //    await Post.deleteOne({_id:id})
+       const deletePost = await Post.findByIdAndDelete({_id:id})
+       res.status(200).json({message: "Пост удален"})
+    //  console.log(deletePost)
     //   res.status(200).json(deletePost)
-  } catch (e) {
-      res.status(500).json(e)
+      const filePath = path.resolve(__dirname, '../../', `static/images${deletePost.imageUrl}`)
+      fs.unlinkSync(filePath)
+  } catch (error) {
+      next(error)
   }
 }
-
-addView = async (req, res) => {
+   
+addView = async (req, res, next) => {
     const $set = {
         views: ++req.body.views
     }
     try {
         await Post.findOneAndUpdate({_id: req.params.id}, {$set})
-        res.status(204).json()
-    } catch (e) {
-        res.status(500).json(e)
+        res.status(204).json() 
+    } catch (error) {
+        next(error)
     }
 }
 

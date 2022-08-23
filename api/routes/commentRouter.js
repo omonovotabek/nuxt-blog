@@ -1,8 +1,10 @@
 const {Router} = require('express')
-const {create} = require('../controllers/commentController')
+const {createComment, deleteComment} = require('../controllers/commentController')
+const {authGuard} = require('../middleware/authGuard')
 
 const router = Router()
 
-router.post('', create)
+router.post('', authGuard, createComment)
+router.delete('/:id', authGuard, deleteComment)
 
 module.exports = router

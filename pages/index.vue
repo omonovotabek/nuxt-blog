@@ -1,12 +1,6 @@
 <template>
   <el-row type="flex" justify="center">
     <el-col :xs="24" :sm="18" :md="12" :lg="10">
-       <!-- <div class="post-body">
-  <img 
-  src="../static/4562.jpg" 
-  alt="post image" 
-  class="post-img"/>
-  </div> -->
       <app-post 
       v-for="post in posts" 
       :key="post._id"

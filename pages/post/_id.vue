@@ -20,23 +20,23 @@
       </div>
       <div class="post-image">
         <img 
-        :src="post.imageUrl" 
+        :src="require(`~/static/images${post.imageUrl}`)" 
         alt="post image" />
       </div>
     </header>
     <main class="post-content">
       <vue-markdown> {{post.text}}</vue-markdown>
-     
     </main>
     <footer> 
       <app-comment-form
+      :postId="post._id"
       v-if="canAddComment" 
       @created="createCommentHendler"
       />
       <div class="comments" v-if="post.comments.length">
         <app-comment
-        v-for="comment in comments"
-        :key="comment"
+        v-for="comment in post.comments"
+        :key="comment._id"
         :comment="comment"
         />
       </div>
@@ -60,15 +60,17 @@ export default {
   async asyncData({store, params}) {
     const post = await store.dispatch('post/fetchById', params.id)
     await store.dispatch('post/addView', post)
-    console.log(post)
-    return {post}
+    return {
+      post:{...post, views: ++post.views}
+      }
   },
   components: {
     AppComment,
     AppCommentForm
   },
   methods: {
-    createCommentHendler() {
+    createCommentHendler(comment) {
+      this.post.comments.unshift(comment)
       this.canAddComment = false
     }
   }

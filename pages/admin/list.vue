@@ -38,7 +38,7 @@
           <el-button
             icon="el-icon-delete"
             type="danger"
-            @click="remove(row._id)"
+            @click="() => {remove(row._id); deleteComment(row._id)}"
           />
         </el-tooltip>
       </template>
@@ -57,6 +57,9 @@ export default {
   methods: {
     open(id) {
       this.$router.push(`/admin/post/${id}?test=123`)
+    },
+    async deleteComment(id){
+      await this.$store.dispatch('comment/deleteComment', id)
     },
     async remove(id) {
       try {

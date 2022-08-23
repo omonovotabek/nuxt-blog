@@ -1,13 +1,16 @@
 <template>
-  <h1>Welcome to admin page</h1>
+<div>
+   <h1>Аналитика по постам</h1>
+</div>
+ 
 </template>
 
 <script>
 export default {
   layout: 'admin',
-  middleware: ['admin-auth']
+  middleware: ['admin-auth'],  
 }
-</script>
+</script>  
 
 <style scoped>
 

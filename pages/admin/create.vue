@@ -29,7 +29,7 @@
         <div :key="controls.text">
           <vue-markdown>{{ controls.text }}</vue-markdown>
         </div>
-      </el-dialog>
+      </el-dialog> 
 
       <el-upload
       drag
