@@ -51,11 +51,7 @@ export default {
     // Install the `IconsPlugin` plugin (in addition to `BootstrapVue` plugin)
     icons: true
   },
-  server: {
-    port: 8000, // default: 3000
-    HOST: '0.0.0.0', // default: localhost,
-    timing: false
-  },
+
    serverMiddleware: {
     '/api': '~/api'
   },
@@ -69,5 +65,10 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     transpile: [/^element-ui/, "vee-validate/dist/rules"],
-  }
+  },
+  server: {
+    port: process.env.PORT || 8000, // default: 3000
+    // HOST: '0.0.0.0', // default: localhost,
+    // timing: false
+  },
 }
