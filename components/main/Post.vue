@@ -15,7 +15,7 @@
 
   <div class="post-body">
   <img 
-  :src="require(`~/static/images${post.imageUrl}`)" 
+  :src="`./images${post.imageUrl}`" 
   alt="post image" 
   class="post-img"/>
   </div>
