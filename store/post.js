@@ -2,7 +2,7 @@
 
 export const actions = { 
 
-  async fetch({}) {
+  async fetch({commit}) {
     try {
       return await this.$axios.$get('/api/post')
     } catch (e) {
@@ -10,7 +10,7 @@ export const actions = {
     }
   },
 
-  async fetchAdmin({}) {
+  async fetchAdmin({commit}) {
     try {
       return await this.$axios.$get('/api/post/admin')
     } catch (e) {
@@ -18,7 +18,7 @@ export const actions = {
     }
   },
 
-  async fetchById({}, id) {
+  async fetchById({commit}, id) {
     try {
       return await this.$axios.$get(`/api/post/${id}`)
     } catch (e) {
@@ -26,7 +26,7 @@ export const actions = {
     }
   },
 
-  async fetchAdminById({}, {params, query}) {
+  async fetchAdminById({commit}, {params, query}) {
     try {
       const queryString = Object.entries(query).map(e => e.join('=')).join('&');
       return await this.$axios.$get(`/api/post/admin/${params.id}?${queryString}`)
@@ -35,7 +35,7 @@ export const actions = {
     }
   },
 
-  async create({ }, {title, text, image}) {
+  async create({commit }, {title, text, image}) {
     try {
       const fd = new FormData()
       fd.append('title', title)
@@ -47,7 +47,7 @@ export const actions = {
     }
   },
 
-  async remove({ }, id) {
+  async remove({ commit }, id) {
     try {
       const ad = await this.$axios.$delete(`/api/post/admin/${id}`)
       // console.log(ad)
@@ -57,7 +57,7 @@ export const actions = {
     }
   },
 
-  async update({ }, { id, text }) {
+  async update({ commit }, { id, text }) {
     try {
       const ad = await this.$axios.$put(`/api/post/admin/${id}`, {text})
       // console.log(ad)
