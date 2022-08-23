@@ -51,9 +51,9 @@ export default {
     // Install the `IconsPlugin` plugin (in addition to `BootstrapVue` plugin)
     icons: true
   },
-   serverMiddleware: {
-    '/api': '~/api'
-  },
+  //  serverMiddleware: {
+  //   '/api': '~/api'
+  // },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
