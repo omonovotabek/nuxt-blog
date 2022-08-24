@@ -4,14 +4,14 @@ const postSchema = new Schema({
     title: {
         type: String,
         required: true,
-        minlength: 2,
-        maxlength: 10
+        // minlength: 2,
+        // maxlength: 10
         },
     text: {
         type: String,
         required: true,
-        minlength: 2,
-        maxlength: 10
+        // minlength: 2,
+        // maxlength: 10
     },
     date: {
         type: Date,
