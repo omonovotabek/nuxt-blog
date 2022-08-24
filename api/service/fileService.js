@@ -8,7 +8,7 @@ class FileService {
   }
 
   createFile(dirName, file) {
-    const filePath = this.rootPath() + "\\" + dirName;
+    const filePath = this.rootPath() + "/" + dirName;
     if (!fs.existsSync(filePath)) {
       fs.mkdirSync(filePath);
     }
@@ -19,7 +19,7 @@ class FileService {
     ) {
       const typeFile = file.name.split(".").pop();
       const uniqFileName = uuid.v4() + "." + typeFile;
-      file.mv(filePath + "\\" + uniqFileName);
+      file.mv(filePath + "/" + uniqFileName);
       return { uniqFileName };
     } else {
       const typeError = "File types allowed .jpeg, .jpg and .png!";
@@ -28,7 +28,7 @@ class FileService {
   }
 
   deleteFile(dirName, uniqFileName) {
-    const filePath = this.rootPath() + "\\" + dirName + uniqFileName;
+    const filePath = this.rootPath() + "/" + dirName + uniqFileName;
     fs.unlinkSync(filePath);
   }
 }
