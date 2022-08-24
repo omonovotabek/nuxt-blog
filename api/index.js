@@ -13,17 +13,17 @@ const app = express();
 app.use(express.json());
 app.use(cors());  
 app.use(fileUpload({}))   
-// app.use(express.static('static/images'))   
+app.use(express.static('static'))   
 app.use(routes);
 app.use(errorHandler)
 // app.use(morgan("dev"))
 
-if (process.env.NODE_ENV) {
-  app.use(express.static(path.resolve(process.cwd(), 'client/build')))
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(process.cwd(), 'client/build/index.html'))
-  })
-}
+// if (process.env.NODE_ENV) {
+//   app.use(express.static(path.resolve(process.cwd(), 'client/build')))
+//   app.get('*', (req, res) => {
+//     res.sendFile(path.resolve(process.cwd(), 'client/build/index.html'))
+//   })
+// }
 
 mongoose
   .connect(`${process.env.DB_URL}`)
