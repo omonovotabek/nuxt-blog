@@ -9,8 +9,9 @@ class FileService {
 
   createFile(dirName, file) {
     const filePath = this.rootPath() + "\\" + dirName;
-    if (!fs.existsSync(filePath)) fs.mkdirSync(filePath);
-
+    if (!fs.existsSync(filePath)) {
+      fs.mkdirSync(filePath);
+    }
     if (
       file.mimetype == "image/png" ||
       file.mimetype == "image/jpg" ||
