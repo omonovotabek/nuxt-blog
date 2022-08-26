@@ -1,4 +1,5 @@
-
+import fileWebService from "../firebase/fileWebService"  
+// import fileLocalService from "../firebase/fileLocalService" 
 
 export const actions = { 
 
@@ -36,12 +37,19 @@ export const actions = {
   },
 
   async create({commit }, {title, text, image}) {
-    try {
-      const fd = new FormData()
-      fd.append('title', title)
-      fd.append('text', text)
-      fd.append('image', image)       
-      return await this.$axios.$post('/api/post/admin', fd)
+    try {     
+      // const fd = new FormData()
+      // fd.append('title', title)
+      // fd.append('text', text)
+      // fd.append('image', image)     
+      let imageUrl;
+      // if(process.env.NODE_ENV === 'development')   
+      //    imageUrl = await fileWebService.saveFile(image)
+      
+      // if(process.env.NODE_ENV === 'production') 
+         imageUrl = await fileWebService.saveFile(image)
+      
+      await this.$axios.$post('/api/post/admin', {title, text, imageUrl})
     } catch (e) {
       commit("setError", e.response, { root: true });
     }
@@ -49,9 +57,8 @@ export const actions = {
 
   async remove({ commit }, id) {
     try {
-      const ad = await this.$axios.$delete(`/api/post/admin/${id}`)
-      // console.log(ad)
-      return ad
+      const imageUrl = await this.$axios.$delete(`/api/post/admin/${id}`)
+      fileWebService.deleteFile(imageUrl)
     } catch (e) {
       commit("setError", e.response, { root: true });
     }

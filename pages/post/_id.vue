@@ -20,7 +20,7 @@
       </div>
       <div class="post-image">
         <img 
-        :src="`/images${post.imageUrl}`" 
+        :src="post.imageUrl" 
         alt="post image" />
       </div>
     </header>

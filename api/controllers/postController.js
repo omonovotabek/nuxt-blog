@@ -3,17 +3,19 @@ const fileService = require("../service/fileService");
 
 create = async function (req, res, next) {
   try {
-    const { title, text } = req.body;
-    const file = req.files.image;
-    const { uniqFileName, typeError } = fileService.createFile("images", file);
-    if (uniqFileName) {
-      const post = new Post({ title, text, imageUrl: `/${uniqFileName}` });
+    const { title, text, imageUrl } = req.body;
+    // const file = req.files.image;
+    // const { uniqFileName, typeError } = fileService.createFile("images", file);
+    // if (uniqFileName) {
+    //   const post = new Post({ title, text, imageUrl: `/${uniqFileName}` });
+    //   await post.save();
+      const post = new Post({ title, text, imageUrl });
       await post.save();
-      res.status(201).json(post);
-    }
-    if (typeError) {
-      res.status(400).json(typeError);
-    }
+      res.status(201).json('post');
+    // }
+    // if (typeError) {
+    //   res.status(400).json(typeError);
+    // }
   } catch (error) {
     next(error);
   }
@@ -62,12 +64,9 @@ remove = async (req, res, next) => {
     const { id } = req.params;
     //    await Post.deleteOne({_id:id})
     const deletePost = await Post.findByIdAndDelete({ _id: id });
-    fileService.deleteFile("images", deletePost.imageUrl);
-    res.status(200).json({ message: "Пост удален" });
-    //  console.log(deletePost)
-    //   res.status(200).json(deletePost)
-    //   const filePath = path.resolve(__dirname, '../../', `static/images${deletePost.imageUrl}`)
-    //   fs.unlinkSync(filePath)
+
+    res.status(200).json(deletePost.imageUrl);
+    
   } catch (error) {
     next(error);
   }

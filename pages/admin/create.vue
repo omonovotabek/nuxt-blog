@@ -100,21 +100,21 @@ export default {
         image: this.image
       };
      this.loading = true;
-      try {
+       try {
         await this.$refs.form.validate();
         if(!this.image){
           this.$message.warning('Форма не валидна');
           this.loading = false
           return
         }
-        const ad = await this.$store.dispatch("post/create", formData);
-        // console.log(ad)
+        await this.$store.dispatch("post/create", formData);
         this.controls.text = "";
         this.controls.title = "";
         this.image = null
         this.$refs.upload.clearFiles()
         this.$message.success("Пост создан");
         this.loading = false
+
       } catch (e) {
         this.loading = false;
         this.$message.warning('Форма не валидна');

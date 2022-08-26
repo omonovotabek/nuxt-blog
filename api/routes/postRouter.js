@@ -1,10 +1,10 @@
 const {Router} = require('express')
 const {authGuard} = require('../middleware/authGuard')
 const postController = require('../controllers/postController')
-const fileUpload = require("express-fileupload")
+// const fileUpload = require("express-fileupload")
 const router = Router() 
 
-router.post('/admin', authGuard, fileUpload({}), postController.create)
+router.post('/admin', authGuard, postController.create)
 router.get('/admin', authGuard, postController.getAll)
 router.get('/admin/:id', authGuard, postController.getById)
 router.put('/admin/:id', authGuard, postController.update)
