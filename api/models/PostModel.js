@@ -22,6 +22,7 @@ const postSchema = new Schema({
         default: 0
     },
     imageUrl: String,
+    imageName:String,
     comments:[ 
     {
         type: Schema.Types.ObjectId,

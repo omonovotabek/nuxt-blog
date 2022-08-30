@@ -6,7 +6,7 @@
         <nuxt-link to="/">
           <i class="el-icon-back"></i>
         </nuxt-link>
-        
+        <button @click="download(post)">download</button>
       </div>
       <div class="post-info">
         <small>
@@ -69,6 +69,23 @@ export default {
     AppCommentForm
   },
   methods: {
+    download(post){
+      const url = post.imageUrl
+       fetch(url).then(res => res.blob()).then(file => {
+       let tempUrl = URL.createObjectURL(file)
+       let aTag = document.createElement("a")
+       aTag.href = tempUrl;
+       aTag.download = url.replace(/^.*[\\\/]/, '')
+       document.body.appendChild(aTag)
+       aTag.click()
+       aTag.remove()
+       URL.revokeObjectURL(tempUrl)
+        console.log(tempUrl);
+    }).catch(() => {
+        alert("Failed to download file!")
+    })
+      console.log(post.imageUrl)
+    },
     createCommentHendler(comment) {
       this.post.comments.unshift(comment)
       this.canAddComment = false

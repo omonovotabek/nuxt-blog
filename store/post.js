@@ -1,5 +1,3 @@
-import fileWebService from "../firebase/fileWebService"  
-// import fileLocalService from "../firebase/fileLocalService" 
 
 export const actions = { 
 
@@ -38,27 +36,19 @@ export const actions = {
 
   async create({commit }, {title, text, image}) {
     try {     
-      // const fd = new FormData()
-      // fd.append('title', title)
-      // fd.append('text', text)
-      // fd.append('image', image)     
-      let imageUrl;
-      // if(process.env.NODE_ENV === 'development')   
-      //    imageUrl = await fileWebService.saveFile(image)
-      
-      // if(process.env.NODE_ENV === 'production') 
-         imageUrl = await fileWebService.saveFile(image)
-      
-      await this.$axios.$post('/api/post/admin', {title, text, imageUrl})
+      const fd = new FormData()
+      fd.append('title', title)
+      fd.append('text', text)
+      fd.append('image', image)          
+      await this.$axios.$post('/api/post/admin', fd)
     } catch (e) {
       commit("setError", e.response, { root: true });
     }
   },
 
-  async remove({ commit }, id) {
+  async remove({ commit }, {id, imageName}) {
     try {
-      const imageUrl = await this.$axios.$delete(`/api/post/admin/${id}`)
-      fileWebService.deleteFile(imageUrl)
+      await this.$axios.$delete(`/api/post/admin/${id}?imageName=${imageName}`)
     } catch (e) {
       commit("setError", e.response, { root: true });
     }
@@ -73,6 +63,7 @@ export const actions = {
       commit("setError", e.response, { root: true });
     }
   },
+  
   async addView({ }, {views, _id}) {
     try {
       return await this.$axios.$put(`/api/post/add/view/${_id}`, {views})

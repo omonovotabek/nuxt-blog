@@ -38,7 +38,7 @@
           <el-button
             icon="el-icon-delete"
             type="danger"
-            @click="() => {remove(row._id); deleteComment(row._id)}"
+            @click="() => {remove(row); deleteComment(row._id)}"
           />
         </el-tooltip>
       </template>
@@ -61,15 +61,16 @@ export default {
     async deleteComment(id){
       await this.$store.dispatch('comment/deleteComment', id)
     },
-    async remove(id) {
+    async remove(row) {
+      const id = row._id
       try {
         await this.$confirm('Удалить пост?', 'Внимание!', {
           confirmButtonText: 'Да',
           cancelButtonText: 'Отменить',
           type: 'warning'
         })
-        const ad = await this.$store.dispatch('post/remove', id)
-        //  console.log(ad)
+        const ad = await this.$store.dispatch('post/remove', {id, imageName: row.imageName})
+        // console.log(row)
         this.posts = this.posts.filter(p => p._id !== id)
         this.$message.success('Пост удален')
       } catch (e) {

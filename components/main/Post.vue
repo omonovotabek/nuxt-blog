@@ -15,7 +15,7 @@
 
   <div class="post-body">
   <img 
-  :src="post.imageUrl" 
+  :src="`${post.imageUrl}`" 
   alt="post image" 
   class="post-img"/>
   </div>

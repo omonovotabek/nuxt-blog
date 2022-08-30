@@ -48,6 +48,7 @@ export default {
     baseURL: process.env.BASE_URL,
   },
 
+
   build: {
     transpile: [/^element-ui/, "vee-validate/dist/rules"],
   },

@@ -1,16 +1,17 @@
 const Post = require("../models/PostModel");
-const fileService = require("../service/fileService");
+
 
 create = async function (req, res, next) {
   try {
-    const { title, text, imageUrl } = req.body;
-    // const file = req.files.image;
-    // const { uniqFileName, typeError } = fileService.createFile("images", file);
-    // if (uniqFileName) {
-    //   const post = new Post({ title, text, imageUrl: `/${uniqFileName}` });
-    //   await post.save();
-      const post = new Post({ title, text, imageUrl });
+    const { title, text } = req.body;
+    const file = req.files.image;
+    // console.log(file)  
+    // const { url, typeError } = fileService.createFile("images", file);
+    // if (url) {
+      const post = new Post({ title, text, imageUrl: file.firebaseUrl, imageName: req.uniqName});
       await post.save();
+      // const post = new Post({ title, text, imageUrl });
+      // await post.save();
       res.status(201).json('post');
     // }
     // if (typeError) {
@@ -62,14 +63,19 @@ update = async (req, res, next) => {
 remove = async (req, res, next) => {
   try {
     const { id } = req.params;
-    //    await Post.deleteOne({_id:id})
-    const deletePost = await Post.findByIdAndDelete({ _id: id });
+    // console.log("req.params", req.params)
+    // console.log("req.query", req.query)
+       await Post.deleteOne({_id:id})
+    // const deletePost = await Post.findByIdAndDelete({ _id: id });
 
-    res.status(200).json(deletePost.imageUrl);
-    
+    res.status(200).json('deletePost.imageUrl');
   } catch (error) {
     next(error);
   }
+};
+
+download =  (req, res, next) => {
+ res.send('download')
 };
 
 addView = async (req, res, next) => {
@@ -90,5 +96,5 @@ module.exports = {
   getById,
   update,
   remove,
-  addView,
+  addView
 };
