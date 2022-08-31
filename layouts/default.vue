@@ -1,8 +1,8 @@
 <template>
     <el-container>
-        <el-header>
+        <!-- <el-header>
             <app-navigation/>
-        </el-header>
+        </el-header> -->
         <el-main>
             <nuxt/>
         </el-main>
@@ -11,10 +11,10 @@
 </template>
 
 <script>
-import AppNavigation from '@/components/main/Navigation'
+// import AppNavigation from '@/components/main/Navigation'
 export default {
-  components: {
-      AppNavigation
-  }
+//   components: {
+//       AppNavigation
+//   }
 }
 </script>

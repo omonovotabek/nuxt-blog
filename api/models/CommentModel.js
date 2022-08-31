@@ -4,14 +4,10 @@ const commentScheam = new Schema({
     name: {
         type: String,
         required: true,
-        // minlength: 3,
-        // maxlength: 10
     },
     text: {
         type: String,
         required: true,
-        // minlength: 3,
-        // maxlength: 10
     },
     date: {
         type: Date,

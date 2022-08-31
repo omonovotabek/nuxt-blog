@@ -4,14 +4,10 @@ const postSchema = new Schema({
     title: {
         type: String,
         required: true,
-        // minlength: 2,
-        // maxlength: 10
         },
     text: {
         type: String,
         required: true,
-        // minlength: 2,
-        // maxlength: 10
     },
     date: {
         type: Date,
@@ -23,6 +19,7 @@ const postSchema = new Schema({
     },
     imageUrl: String,
     imageName:String,
+    type: String,
     comments:[ 
     {
         type: Schema.Types.ObjectId,

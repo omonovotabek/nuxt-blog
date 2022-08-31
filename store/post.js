@@ -1,9 +1,25 @@
 
 export const actions = { 
 
-  async fetch({commit}) {
+  async fetch({commit}, name) {
     try {
-      return await this.$axios.$get('/api/post')
+      let url = `/api/post`;
+      if (name) {
+        if (name === "Images") {
+          url = `/api/post?sort=images`;
+        }
+        if (name === "Videos") {
+          url = `/api/post?sort=videos`;
+        }
+        if (name === "Audios") {
+          url = `/api/post?sort=audios`;
+        }
+        if (name === "Documents") {
+          url = `/api/post?sort=documents`;
+        }
+      }
+      return await this.$axios.$get(url);
+      // return await this.$axios.$get('/api/post')
     } catch (e) {
       commit("setError", e.response, { root: true });
     }

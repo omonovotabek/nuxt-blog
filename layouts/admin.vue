@@ -1,22 +1,22 @@
 <template>
   <div class="admin-layout-wrap">
-    <el-container >
-      <el-aside width="250px"> 
-        <app-aside/>
-         </el-aside>
+    <el-container>
+      <el-aside width="250px">
+        <app-aside />
+      </el-aside>
       <el-main>
         <nuxt />
       </el-main>
     </el-container>
   </div>
-</template>  
+</template>
 
 <script>
-import AppAside from '@/components/admin/Aside'
+import AppAside from "@/components/admin/Aside";
 export default {
   components: {
-    AppAside  
-  }
+    AppAside,
+  },
 };
 </script>
 
@@ -24,6 +24,5 @@ export default {
 .admin-layout-wrap {
   width: 100%;
   height: 100vh;
-
 }
 </style>
