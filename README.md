@@ -1,6 +1,6 @@
 # nuxt-blog
 ## FullStack nuxt app dinamic site deploy heroku
-## URL adress: https://disk-cloud.herokuapp.com/
+## URL adress: http://ssrnuxt.herokuapp.com/
 ## Build Setup
 
 ```bash
